@@ -1,0 +1,41 @@
+@font-face {
+    font-family: "Redacted";
+    src: url("fonts/redacted-regular.eot");
+    src: url("fonts/redacted-regular.woff2") format("woff2"), url("fonts/redacted-regular.woff") format("woff"), url("fonts/redacted-regular.otf") format("opentype"), url("fonts/redacted-regular.svg#filename") format("svg");
+}
+
+@font-face {
+    font-family: "Pacifico";
+    src: url("fonts/pacifico.ttf");
+}
+
+body {
+    padding-top: 8em;
+}
+
+#logo {
+    font-family: 'pacifico';
+    font-size: 2rem;
+}
+
+#login {
+    top: 30%;
+    position: absolute;
+    right: 0;
+}
+
+#contentBox {
+    margin-bottom: 100px;
+}
+
+@media (min-width: 600px) {
+    #todayBox {
+        padding: 0 50px;
+    }
+}
+
+#tomorrowBox {}
+
+.footer.segment {
+    padding: 5em 0em;
+}
