@@ -36,5 +36,8 @@
         "url": "git://github.com/rohillion/todaysmenuis.git"
     },
     "author": "rohillion",
-    "license": ""
+    "license": "",
+    "engines": {
+        "node": "4.1.1"
+    }
 }
