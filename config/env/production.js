@@ -11,6 +11,9 @@
  */
 
 module.exports = {
+    
+    FACEBOOK_APP_ID: '1553316051626626',
+    FACEBOOK_APP_SECRET: 'f247bbde39eadf724c33e6298e27638a'
 
   /***************************************************************************
    * Set the default database connection for models in the production        *

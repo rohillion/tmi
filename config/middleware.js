@@ -42,7 +42,7 @@ module.exports = {
     express: {
         customMiddleware: function (app) {
 
-            var local = require('./local.js');
+            var local = require('./env/'+ sails.config.environment +'.js');
             
             // Configure with your credentials
             var FACEBOOK_APP_ID = local.FACEBOOK_APP_ID;
