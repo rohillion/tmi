@@ -9,8 +9,6 @@ var HomeController = {
 
     index: function (req,res)
     {
-
-        console.log(req.user);
         res.view({
             user: req.user
         });

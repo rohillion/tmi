@@ -44,11 +44,19 @@ module.exports.routes = {
         controller: 'auth',
         action: 'index'
     },
-
+    
     '/logout': {
         controller: 'auth',
         action: 'logout'
-    }
+    },
+    
+    '/session': {
+        controller: 'auth',
+        action: 'session'
+    },
+    
+    'post /image/:id': 'ImageController.upload',
+
 
     /***************************************************************************
      *                                                                          *

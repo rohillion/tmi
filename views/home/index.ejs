@@ -3,54 +3,17 @@
         <!--<a href="#/" class="item" ng-class="{active: segment === '/journeys'}">Journeys</a>-->
         <div id="logo" href="#/" class="header item">Today's menu is</div>
         <!--<a href="#/journeys" class="item" ng-class="{active: segment === '/journeys'}">Journeys</a>-->
-        <a id="login" class="ui button teal" href="/auth/facebook/">Login</a>
+        <% if (user) { %>
+            <a id="logout" class="ui button teal auth" href="/auth/logout">Logout</a>
+        <% }else{ %>
+            <a id="login" class="ui button teal auth" href="/auth/facebook/">Login</a>
+        <% } %>
+        
     </div>
 </div>
 
-<div id="contentBox" class="ui text container center aligned">
-    <div id="todayBox">
-        <h1 class="ui header">Spaghetti wok</h1>
-        <br>
-        <div class="ui centered grid stackable">
-            <div>
-                <img class="ui fluid image rounded" src="/images/asian.jpg">
-                <br>
-                <button class="orange massive fluid ui button">Order for €6.50</button>
-            </div>
-        </div>
-    </div>
+<div id="appWrapper" ng-view="">
 
-    <br>
-    <div class="ui horizontal divider">
-        Or
-    </div>
-    <br>
-    <div id="tomorrowBox">
-        <h1 class="ui header">Vote tomorrow's menu</h1>
-        <br>
-        <div class="ui three column centered grid stackable">
-            <div class="column centered row">
-
-                <div class="column aligned">
-                    <h3 class="ui header">
-                        Salmon teriyaki
-                    </h3>
-                    <img class="ui fluid image rounded" src="/images/salmon.jpg">
-                    <br>
-                    <button class="teal massive fluid ui button">Upvote</button>
-                </div>
-
-                <div class="column aligned">
-                    <h3 class="ui header">
-                        Gourmet burguer
-                    </h3>
-                    <img class="ui fluid image rounded" src="/images/burguer.jpg">
-                    <br>
-                    <button class="teal massive fluid ui button">Upvote</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="ui inverted vertical footer segment">

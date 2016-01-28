@@ -8,8 +8,9 @@
 module.exports = {
 
     attributes: {
-        provider: 'STRING',
-        uid: 'INTEGER',
-        name: 'STRING'
+        provider: 'string',
+        uid: 'integer',
+        name: 'string',
+        admin:'boolean'
     }
 };

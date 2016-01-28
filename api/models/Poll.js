@@ -1,5 +1,5 @@
 /**
- * Order.js
+ * Poll.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,15 +8,9 @@
 module.exports = {
 
     attributes: {
-        /*dishes: {
-            collection:'dish',
-            via:'order'
-        },*/
-        client: {
-            model: 'user'
-        },
-        dish: {
-            model: 'dish'
+        dishes: {
+            collection: 'dish',
+            via: 'poll'
         }
     }
 };

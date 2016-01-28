@@ -18,7 +18,7 @@ body {
     font-size: 2rem;
 }
 
-#login {
+.auth {
     top: 30%;
     position: absolute;
     right: 0;
@@ -28,13 +28,41 @@ body {
     margin-bottom: 100px;
 }
 
+#todayBox header{
+    position: relative;
+}
+
 @media (min-width: 600px) {
     #todayBox {
         padding: 0 50px;
     }
 }
 
+#deleteDish{
+    position: absolute;
+    right: 0;
+}
+
 #tomorrowBox {}
+
+#dishName[contenteditable='true']:empty:before{
+  content: 'Dish name...';
+}
+#dishPrice[contenteditable='true']:empty:before{
+  content: '0.00';
+}
+
+.dish-picker.ui.button.dropdown .menu{
+    min-width: 16em;
+}
+
+.file-form {
+    display: none;
+}
+
+.pointer{
+    cursor: pointer;
+}
 
 .footer.segment {
     padding: 5em 0em;

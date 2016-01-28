@@ -17,12 +17,12 @@ var AuthController = {
         req.logout();
         res.redirect('/');
     },
-    
+
     'facebook': function (req, res) {
-        passport.authenticate('facebook', { 
-            failureRedirect: '/login',
-            //scope: ['email']
-        },
+        passport.authenticate('facebook', {
+                failureRedirect: '/login',
+                //scope: ['email']
+            },
             function (err, user) {
                 req.logIn(user, function (err) {
                     if (err) {
@@ -45,7 +45,10 @@ var AuthController = {
     },
 
     'google': function (req, res) {
-        passport.authenticate('google', { failureRedirect: '/login', scope:['https://www.googleapis.com/auth/plus.login','https://www.googleapis.com/auth/userinfo.profile'] },
+        passport.authenticate('google', {
+                failureRedirect: '/login',
+                scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.profile']
+            },
             function (err, user) {
                 req.logIn(user, function (err) {
                     if (err) {
@@ -65,6 +68,12 @@ var AuthController = {
             function (req, res) {
                 res.redirect('/');
             })(req, res);
+    },
+
+    'session': function (req, res) {
+        if(req.isAuthenticated())
+            return res.json(req.user);
+        return res.json({});
     }
 
 };

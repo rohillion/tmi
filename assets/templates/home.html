@@ -1,0 +1,83 @@
+<div id="contentBox" class="ui text container center aligned">
+    <div id="todayBox">
+        <header ng-init="init()">
+
+            <div ng-if="user.admin === true" class="ui teal buttons">
+                <div class="ui button" ng-click="createDish()" title="Create new dish">New</div>
+                <div class="ui floating dropdown icon button dish-picker" title="Select dish from history">
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" ng-repeat="hDish in dishHistory" data-value="{{hDish.id}}">
+                            <img class="ui avatar image" ng-src="{{hDish.imagePath}}"> {{hDish.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="user.admin === true" id="deleteDish" class="ui button icon" title="Delete current dish" ng-click="deleteDish()">
+                <i class="ui icon delete"></i>
+            </div>
+
+            <h1 id="dishName" class="ui header" contenteditable="{{user.admin === true}}" ng-blur="saveDish()" ng-model="dish.name">
+            </h1>
+
+        </header>
+
+        <br>
+        <div class="ui centered grid stackable">
+            <div>
+                <div class="ui inverted dimmer">
+                    <div class="ui text loader">Loading</div>
+                </div>
+                <label for="file" ng-class="{pointer : user.admin === true}">
+                    <img class="ui fluid image rounded" ng-src="{{dish.imagePath}}">
+                </label>
+
+                <form ng-if="user.admin === true" class="file-form">
+                    <input id="file" type="file" ngf-select="fileSelected($files)" accept="'image/*'">
+                </form>
+
+                <br>
+                <div id="dishPrice" ng-if="user.admin === true" contenteditable="{{user.admin === true}}" class="orange massive fluid ui button" ng-model='dish.price' ng-blur="saveDish()">
+                </div>
+
+                <button ng-if="user.admin !== true" class="orange massive fluid ui button">
+                    Order for {{dish.price | currency:"€":2}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="ui horizontal divider">
+        Or
+    </div>
+    <br>
+
+    <div id="tomorrowBox">
+        <h1 class="ui header">Vote tomorrow's menu</h1>
+        <br>
+        <div class="ui three column centered grid stackable">
+            <div class="column centered row">
+
+                <div class="column aligned">
+                    <h3 class="ui header">
+                        Salmon teriyaki
+                    </h3>
+                    <img class="ui fluid image rounded" src="/images/salmon.jpg">
+                    <br>
+                    <button class="teal massive fluid ui button">Upvote</button>
+                </div>
+
+                <div class="column aligned">
+                    <h3 class="ui header">
+                        Gourmet burguer
+                    </h3>
+                    <img class="ui fluid image rounded" src="/images/burguer.jpg">
+                    <br>
+                    <button class="teal massive fluid ui button">Upvote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

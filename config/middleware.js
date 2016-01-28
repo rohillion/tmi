@@ -14,7 +14,8 @@ var verifyHandler = function (token, tokenSecret, profile, done) {
                 User.create({
                     provider: profile.provider,
                     uid: profile.id,
-                    name: profile.displayName
+                    name: profile.displayName,
+                    admin: false
                 }, function (err, user) {
                     return done(err, user);
                 });
