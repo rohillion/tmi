@@ -9,7 +9,16 @@
     src: url("fonts/pacifico.ttf");
 }
 
-body {
+.snap-content {
+    background-color: white;
+}
+
+.snap-drawer {
+    padding: 2em;
+    background-color: #f7f7f7;
+}
+
+#appWrapper {
     padding-top: 8em;
 }
 
@@ -18,7 +27,22 @@ body {
     font-size: 2rem;
 }
 
-.auth {
+#sidemenu-box {
+    padding-top: 1em;
+}
+
+#pending-orders {
+    overflow-y: auto;
+    height: 50vh;
+}
+
+a.auth {
+    position: absolute;
+    bottom: 2em;
+    width: 80%;
+}
+
+.sidemenu-button {
     top: 30%;
     position: absolute;
     right: 0;
@@ -28,7 +52,7 @@ body {
     margin-bottom: 100px;
 }
 
-#todayBox header{
+#todayBox header {
     position: relative;
 }
 
@@ -38,21 +62,22 @@ body {
     }
 }
 
-#deleteDish{
+#deleteDish {
     position: absolute;
     right: 0;
 }
 
 #tomorrowBox {}
 
-#dishName[contenteditable='true']:empty:before{
-  content: 'Dish name...';
-}
-#dishPrice[contenteditable='true']:empty:before{
-  content: '0.00';
+#dishName[contenteditable='true']:empty:before {
+    content: 'Dish name...';
 }
 
-.dish-picker.ui.button.dropdown .menu{
+#dishPrice[contenteditable='true']:empty:before {
+    content: '0.00';
+}
+
+.dish-picker.ui.button.dropdown .menu {
     min-width: 16em;
 }
 
@@ -60,7 +85,27 @@ body {
     display: none;
 }
 
-.pointer{
+.orange.button {
+    width: 100%;
+}
+
+.green.button {
+    width: 75%;
+}
+
+.ui.action.input>.green.button {
+    display: block;
+    text-align: center;
+    width: 75%;
+}
+
+#orderBox #qty {
+    text-align: center;
+    flex: initial;
+    width: 25%;
+}
+
+.pointer {
     cursor: pointer;
 }
 

@@ -1,6 +1,6 @@
 'use stric';
 
-var tmi = angular.module('tmi',['ngResource', 'ngRoute', 'ngFileUpload']);
+var tmi = angular.module('tmi',['ngResource', 'ngRoute', 'ngFileUpload', 'ngMap', 'snap']);
 
 tmi.config(['$routeProvider', '$resourceProvider', function($routeProvider, $resourceProvider){
 

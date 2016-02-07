@@ -17,6 +17,7 @@ var tmpPath = '.tmp/public/';
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
   'styles/semantic.min.css',
+  'bower_components/angular-snap/angular-snap.min.css',
   'styles/**/*.css'
 ];
 
@@ -34,6 +35,9 @@ var jsFilesToInject = [
   'bower_components/angular-route/angular-route.min.js',
   'bower_components/angular-resource/angular-resource.min.js',
   'bower_components/ng-file-upload/ng-file-upload.min.js',
+  'bower_components/ngmap/build/scripts/ng-map.min.js',
+  'bower_components/snapjs/snap.min.js',
+  'bower_components/angular-snap/angular-snap.min.js',
   'js/app.js',
   'js/directives.js',
   'js/services/*.js',

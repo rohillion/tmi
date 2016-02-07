@@ -38,17 +38,83 @@
                 </form>
 
                 <br>
-                <div id="dishPrice" ng-if="user.admin === true" contenteditable="{{user.admin === true}}" class="orange massive fluid ui button" ng-model='dish.price' ng-blur="saveDish()">
+                <div id="dishPrice" ng-if="user.admin === true" contenteditable="{{user.admin === true}}" class="orange massive ui button" ng-model='dish.price' ng-blur="saveDish()">
                 </div>
 
-                <button ng-if="user.admin !== true" class="orange massive fluid ui button">
+                <button ng-if="user.admin !== true" class="orange massive ui button" ng-click="open()">
                     Order for {{dish.price | currency:"€":2}}
                 </button>
             </div>
         </div>
     </div>
 
-    <br>
+    <!-- Order create/edit form -->
+    <div id="orderForm" class="ui page dimmer inverted" ng-class="{active:orderForm.opened}">
+        <div class="content">
+            <div class="ui two column centered grid stackable">
+                <div class="column">
+                    <div class="ui form">
+
+                        <div id="loginBox" ng-if="!user.id">
+                            <div class="field">
+                                <a id="login" class="teal fluid massive ui button" href="/auth/facebook/">Login with Facebook</a>
+                            </div>
+                            <div class="field">
+                                <button class="ui right floated button tiny" ng-click="close()">
+                                    cancel
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="orderBox" ng-if="user.id">
+
+                            <div class="field">
+                                <div class="two fields">
+                                    <div class="field">
+                                        <div class="ui massive fluid icon input">
+                                            <input ng-model="user.address" type="text" placeholder="Where are you?" places-auto-complete types="['geocode']" on-place-changed="updateLocation()" component-restrictions="{country:'ie'}" types="['address']" />
+                                            <i class="search icon"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="ui massive fluid icon input">
+                                            <input ng-model="user.phone" ng-blur="updateUser({phone:user.phone})" type="text" placeholder="Contact number" />
+                                            <i class="phone icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <ng-map ng-if="mapLoaded || orderForm.opened" center="{{mapPos.lat}},{{mapPos.lng}}" zoom="15">
+                                    <marker position="{{markerPos}}" animation="Animation.BOUNCE"></marker>
+                                </ng-map>
+                            </div>
+                            <div class="field">
+
+                                <div class="ui action input massive">
+                                    <input id="qty" min="1" type="number" ng-model="order.qty">
+                                    <button ng-click="createOrder()" class="green massive ui button" ng-class="{disabled:!user.location.lat || !user.phone.length > 0}">
+                                        Order for {{dish.price * order.qty | currency:"€":2}}
+                                    </button>
+                                </div>
+
+                            </div>
+                            <div class="field">
+                                <button class="ui right floated button tiny" ng-click="close()">
+                                    cancel
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<br>
     <div class="ui horizontal divider">
         Or
     </div>
@@ -79,5 +145,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>

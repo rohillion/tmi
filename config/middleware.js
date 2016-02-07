@@ -15,7 +15,8 @@ var verifyHandler = function (token, tokenSecret, profile, done) {
                     provider: profile.provider,
                     uid: profile.id,
                     name: profile.displayName,
-                    admin: false
+                    admin: false,
+                    location: ''
                 }, function (err, user) {
                     return done(err, user);
                 });

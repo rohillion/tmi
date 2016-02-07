@@ -1,24 +1,44 @@
-tmi.controller('HomeCtrl', ['$scope', 'Auth', 'Dish', 'API_URL', 'Upload', function ($scope, Auth, Dish, API_URL, Upload) {
+tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL', 'Upload', 'OrderForm', 'NgMap', function ($scope, Auth, User, Dish, Order, API_URL, Upload, OrderForm, NgMap) {
 
+    $scope.mapLoaded = false;
+
+    $scope.orderForm = OrderForm.getScope();
+
+    $scope.user = {};
     $scope.dish = {};
+    $scope.map = {};
     $scope.dishHistory = [];
+    $scope.order = {
+        qty: 1,
+        active: true
+    };
+
+    //Dublin by default
+    $scope.mapPos = {
+        lat: 53.3462285,
+        lng: -6.28822
+    };
 
     //List dishes
     $scope.listDish = function (filters, callback) {
         Dish.query(filters, function (dish) {
             if (typeof callback === 'function')
                 callback(dish);
+        }, function (err) {
+            console.log(err.data);
+            alert(err.data.summary);
         });
     }
 
     //Get current user
-    $scope.user = {};
     Auth.currentUser().then(function (user) {
         $scope.user = user.data;
         if ($scope.user.admin) {
             dropdownInit();
             dimmerInit();
         }
+        if ($scope.user.id)
+            $scope.order.client = $scope.user.id
     });
 
     //Create new dish
@@ -39,6 +59,9 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'Dish', 'API_URL', 'Upload', funct
         }, function (dish) {
             $scope.dish = dish;
             refreshHistory();
+        }, function (err) {
+            console.log(err.data);
+            alert(err.data.summary);
         });
     }
 
@@ -54,6 +77,9 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'Dish', 'API_URL', 'Upload', funct
         }, dish, function (dish) {
             if (typeof callback === 'function')
                 callback(dish);
+        }, function (err) {
+            console.log(err.data);
+            alert(err.data.summary);
         });
     }
 
@@ -64,6 +90,9 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'Dish', 'API_URL', 'Upload', funct
         }, function () {
             $scope.dish = {};
             changeActive($scope.dishHistory[0].id);
+        }, function (err) {
+            console.log(err.data);
+            alert(err.data.summary);
         });
     }
 
@@ -92,6 +121,80 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'Dish', 'API_URL', 'Upload', funct
                 });
         }
     };
+
+    //Show order/login modal
+    $scope.open = function () {
+        if (!$scope.mapLoaded) {
+            $scope.mapLoaded = true;
+            NgMap.getMap().then(function (map) {
+                //Store map object and adjust marker and center position
+                $scope.map = map;
+                if ($scope.user.location && $scope.user.location.lat) {
+                    $scope.mapPos = $scope.markerPos = {
+                        lat: $scope.user.location.lat,
+                        lng: $scope.user.location.lng
+                    }
+                }
+            });
+        }
+        OrderForm.open();
+    }
+
+    $scope.close = function () {
+        OrderForm.close();
+    }
+
+    $scope.updateLocation = function () {
+
+        //Retreive new place
+        var place = this.getPlace();
+
+        //Set data to update
+        var data = {
+            address: place.formatted_address,
+            location: {
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng()
+            }
+        };
+
+        $scope.updateUser(data, function (user) {
+            //Update map position and markers.
+            $scope.user.location = user.location;
+            $scope.map.setCenter(place.geometry.location);
+            $scope.markerPos = {
+                lat: user.location.lat,
+                lng: user.location.lng
+            }
+        });
+    }
+
+    //Update user
+    $scope.updateUser = function (data, callback) {
+        User.update({
+            id: $scope.user.id
+        }, data, function (user) {
+            if (typeof callback === 'function')
+                callback(user);
+        }, function (err) {
+            console.log(err.data);
+            alert(err.data.summary);
+        });
+    }
+
+    $scope.createOrder = function () {
+        if ($scope.order.dish) {
+            Order.save($scope.order, function (order) {
+                console.log('Ordered!');
+                $scope.close();
+                OrderForm.ordered();
+            }, function (err) {
+                console.log(err.data);
+                alert(err.data.summary);
+            });
+        }
+    }
+
 
     //Init jQuery dropdown
     function dropdownInit() {
@@ -137,6 +240,9 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'Dish', 'API_URL', 'Upload', funct
                 $scope.dish = dish;
                 refreshHistory();
             }
+        }, function (err) {
+            console.log(err.data);
+            alert(err.data.summary);
         });
     }
 
@@ -147,8 +253,10 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'Dish', 'API_URL', 'Upload', funct
     }
 
     function setDish(dish) {
-        if (dish[0])
+        if (dish[0]) {
             $scope.dish = dish[0];
+            $scope.order.dish = $scope.dish.id;
+        }
     }
 
     function setDishHistory(dishes) {

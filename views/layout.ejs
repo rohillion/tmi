@@ -30,6 +30,7 @@
 
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/semantic.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-snap/angular-snap.min.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/styles/main.css">
     <!--STYLES END-->
@@ -62,7 +63,7 @@
     -->
 
     <!--TEMPLATES-->
-    <script type="text/javascript" src="/jst.js"></script>
+    
     <!--TEMPLATES END-->
 
 
@@ -88,7 +89,7 @@
           + Use a different preprocessor, like TypeScript
 
     -->
-
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
@@ -96,10 +97,17 @@
     <script src="/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="/bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+    <script src="/bower_components/snapjs/snap.min.js"></script>
+    <script src="/bower_components/angular-snap/angular-snap.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/services/Auth.js"></script>
     <script src="/js/services/Dish.js"></script>
+    <script src="/js/services/Order.js"></script>
+    <script src="/js/services/OrderForm.js"></script>
+    <script src="/js/services/User.js"></script>
     <script src="/js/controllers/HomeCtrl.js"></script>
+    <script src="/js/controllers/SidebarCtrl.js"></script>
     <script src="/js/dependencies/semantic.min.js"></script>
     <script src="/js/directives/contenteditable.js"></script>
     <!--SCRIPTS END-->

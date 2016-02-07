@@ -1,45 +1,108 @@
-<div class="ui fixed pointing borderless one item menu">
-    <div class="ui container center aligned">
-        <!--<a href="#/" class="item" ng-class="{active: segment === '/journeys'}">Journeys</a>-->
-        <div id="logo" href="#/" class="header item">Today's menu is</div>
-        <!--<a href="#/journeys" class="item" ng-class="{active: segment === '/journeys'}">Journeys</a>-->
+<div ng-controller="SidebarCtrl">
+    <div snap-drawer="right" ng-init="init()">
+        <div id="sidemenu-box" class="ui grid centered">
+
+            <% if (user) { %>
+                <h2 class="ui header">
+                <img src="http://graph.facebook.com/v2.5/<%- user.uid %>/picture?width=128&height=128" class="ui circular image">
+                <div><%- user.name %></div>
+            </h2>
+
+                <div id="pending-orders" ng-if="orders.length > 0">
+                    <div ng-repeat="order in orders" class="ui fluid card">
+                        <div class="image">
+                            <img ng-src="{{order.dish.imagePath}}">
+                        </div>
+                        <div class="content">
+                            <div class="header" href="#">{{order.dish.name}}</div>
+                            <div class="meta">
+                                <div>x{{order.qty}} = {{order.dish.price * order.qty | currency:"€":2}}</div>
+                            </div>
+                        </div>
+                        <div ng-click="setCancelOrder(order)" class="ui negative button bottom attached">Cancel order</div>
+                    </div>
+                </div>
+
+                <div ng-if="orders.length < 1">
+                    <div class="ui icon message">
+                        <i class="smile icon tiny"></i>
+                        <div class="content">
+                            <p>No pending orders.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <% }%>
+        </div>
         <% if (user) { %>
-            <a id="logout" class="ui button teal auth" href="/auth/logout">Logout</a>
-        <% }else{ %>
-            <a id="login" class="ui button teal auth" href="/auth/facebook/">Login</a>
-        <% } %>
-        
+            <a id="logout" class="ui button teal auth massive" href="/auth/logout">Logout</a>
+            <% }else{ %>
+                <a id="login" class="ui button teal auth massive" href="/auth/facebook/">Login</a>
+                <% } %>
+
     </div>
-</div>
 
-<div id="appWrapper" ng-view="">
-
-</div>
-
-<div class="ui inverted vertical footer segment">
-    <div class="ui container">
-        <div class="ui stackable inverted divided equal height stackable grid">
-            <div class="three wide column">
-                <h4 class="ui inverted header">About</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Sitemap</a>
-                    <a href="#" class="item">Contact Us</a>
-                    <a href="#" class="item">Religious Ceremonies</a>
-                    <a href="#" class="item">Gazebo Plans</a>
+    <!-- Order cancel modal -->
+    <div class="ui page dimmer" ng-class="{active:orderToCancel.id}">
+        <div class="content">
+            <div class="ui two column centered grid stackable">
+                <div class="column">
+                    <div class="ui form">
+                        <div class="field">
+                            <h1>Are you sure you want to cancel the order?</h1>
+                        </div>
+                        <div class="field">
+                            <button class="massive ui button" ng-click="cancelOrder()">
+                                Cancel order
+                            </button>
+                            <button class="massive ui button teal" ng-click="orderToCancel = {}">
+                                Keep order
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">Services</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Banana Pre-Order</a>
-                    <a href="#" class="item">DNA FAQ</a>
-                    <a href="#" class="item">How To Access</a>
-                    <a href="#" class="item">Favorite X-Men</a>
+        </div>
+    </div>
+
+</div>
+<div snap-content="right" snap-opt-disable="'left'">
+    <div class="ui fixed pointing borderless one item menu">
+        <div class="ui container center aligned">
+            <div id="logo" href="#/" class="header item">Today's menu is</div>
+            <button snap-toggle="right" class="ui button teal sidemenu-button icon">
+                <i class="icon sidebar"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="appWrapper" ng-view=""></div>
+
+    <div class="ui inverted vertical footer segment">
+        <div class="ui container">
+            <div class="ui inverted divided equal height stackable grid">
+                <div class="three wide column">
+                    <h4 class="ui inverted header">About</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">Sitemap</a>
+                        <a href="#" class="item">Contact Us</a>
+                        <a href="#" class="item">Religious Ceremonies</a>
+                        <a href="#" class="item">Gazebo Plans</a>
+                    </div>
                 </div>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header">Footer Header</h4>
-                <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">Services</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">Banana Pre-Order</a>
+                        <a href="#" class="item">DNA FAQ</a>
+                        <a href="#" class="item">How To Access</a>
+                        <a href="#" class="item">Favorite X-Men</a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header">Footer Header</h4>
+                    <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                </div>
             </div>
         </div>
     </div>
