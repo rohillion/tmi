@@ -12,11 +12,11 @@ module.exports = function (req, res, next) {
     // User is allowed, proceed to the next policy, 
     // or if this is the last policy, the controller
 
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user.admin) {
         return next();
     }
 
-    // User is not allowed
+    // User is not admin
 
     return res.json(401, {
         summary: 'Unauthorized'

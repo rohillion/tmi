@@ -8,7 +8,12 @@ tmi.controller('SidebarCtrl', ['$scope', 'Order', 'Auth', 'OrderForm', 'snapRemo
     }
 
     $scope.setCancelOrder = function (order) {
+        console.log(order.id);
         $scope.orderToCancel = order;
+    }
+    
+    $scope.keepOrder = function () {
+        $scope.orderToCancel = {};
     }
 
     $scope.cancelOrder = function () {

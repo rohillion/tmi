@@ -72,6 +72,9 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
 
     //Update changes on blur event
     $scope.updateDish = function (dish, callback) {
+        if(dish.price && dish.price.indexOf(',') > 0)
+            dish.price = dish.price.replace(",", ".");
+        
         Dish.update({
             id: dish.id
         }, dish, function (dish) {
@@ -79,6 +82,7 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
                 callback(dish);
         }, function (err) {
             console.log(err.data);
+            console.log(err.data.summary);
             alert(err.data.summary);
         });
     }
@@ -98,7 +102,7 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
 
     $scope.fileSelected = function (files) {
         if (files && files.length) {
-            $('.dimmer').dimmer('show');
+            $('.image-loading').dimmer('show');
             $scope.file = files[0];
 
             Upload
@@ -109,11 +113,11 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
                     $scope.dish.imagePath = res.data.url;
                     console.log(res, 'uploaded');
                     $scope.file = {};
-                    $('.dimmer').dimmer('hide');
+                    $('.image-loading').dimmer('hide');
                 }, function (resp) {
                     console.log('Error status: ' + resp.status);
                     $scope.file = {};
-                    $('.dimmer').dimmer('hide');
+                    $('.image-loading').dimmer('hide');
                 }, function (evt) {
                     console.log(evt);
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -185,7 +189,6 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
     $scope.createOrder = function () {
         if ($scope.order.dish) {
             Order.save($scope.order, function (order) {
-                console.log('Ordered!');
                 $scope.close();
                 OrderForm.ordered();
             }, function (err) {
@@ -209,7 +212,7 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
 
     //Init jQuery dimmer
     function dimmerInit() {
-        $('.dimmer').dimmer({
+        $('.dimmer,.image-loading').dimmer({
             closable: false
         });
     }

@@ -26,7 +26,7 @@
         <br>
         <div class="ui centered grid stackable">
             <div>
-                <div class="ui inverted dimmer">
+                <div class="ui inverted dimmer image-loading">
                     <div class="ui text loader">Loading</div>
                 </div>
                 <label for="file" ng-class="{pointer : user.admin === true}">
@@ -55,6 +55,7 @@
                 <div class="column">
                     <div class="ui form">
 
+                        <!-- LOGIN BOX -->
                         <div id="loginBox" ng-if="!user.id">
                             <div class="field">
                                 <a id="login" class="teal fluid massive ui button" href="/auth/facebook/">Login with Facebook</a>
@@ -66,7 +67,8 @@
                             </div>
                         </div>
 
-                        <div id="orderBox" ng-if="user.id">
+                        <!-- ORDER BOX -->
+                        <div id="orderBox" ng-if="user.id && !user.admin">
 
                             <div class="field">
                                 <div class="two fields">

@@ -34,21 +34,20 @@ module.exports = {
 
     afterCreate: function (insertedRecord, cb) {
 
-        console.log(insertedRecord);
         User.findOne({
             id: insertedRecord.client
         }, function (err, user) {
             if (err) {
                 console.log('Order:afterCreate: User Lookup Error: ', err);
             }
-console.log(user);
+
             Dish.findOne({
                 id: insertedRecord.dish
             }, function (err, dish) {
                 if (err) {
                     console.log('Order:afterCreate: Dish Lookup Error: ', err);
                 }
-console.log(dish);
+
                 //Set client name
                 mailOptions.from = user.name + '<todaysmenuisapp@gmail.com>';
 
@@ -58,12 +57,12 @@ console.log(dish);
 
                 mailOptions.html = '<i>Menu Details</i>\
                                     <ul>\
-                                        <li><b>Client: </b>'+user.name+'</li>\
-                                        <li><b>Address: </b>'+user.address+'</li>\
+                                        <li><b>Client: </b>' + user.name + '</li>\
+                                        <li><b>Address: </b>' + user.address + '</li>\
                                         <li><b>Location: </b>\
-                                            <a href="https://maps.google.ie/?q='+user.address+'&sll='+user.location.lat+','+user.location.lng+'">Go to maps</a>\
+                                            <a href="https://maps.google.ie/?q=' + user.address + '&sll=' + user.location.lat + ',' + user.location.lng + '">Go to maps</a>\
                                         </li>\
-                                        <li><b>Phone: </b>'+user.phone+'</li>\
+                                        <li><b>Phone: </b>' + user.phone + '</li>\
                                     </ul>\
                                     <i>Menu Details</i>\
                                     <ul>\
@@ -71,7 +70,7 @@ console.log(dish);
                                         <li><b>Qty: </b>' + insertedRecord.qty + '</li>\
                                         <li><b>Total: </b>€' + insertedRecord.qty * dish.price + '</li>\
                                     </ul>';
-                
+
                 ' maps.google.com/?q=ThePlace&sll=latitude,longitude'
 
                 // send mail with defined transport object
@@ -85,6 +84,14 @@ console.log(dish);
             });
 
         });
+
+        cb();
+    },
+
+    afterUpdate: function (updatedRecord, cb) {
+        console.log(updatedRecord);
+        if (updatedRecord.active === false)
+            console.log('send email');
 
         cb();
     }

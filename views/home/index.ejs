@@ -1,4 +1,5 @@
 <div ng-controller="SidebarCtrl">
+    <!-- SIDEBAR -->
     <div snap-drawer="right" ng-init="init()">
         <div id="sidemenu-box" class="ui grid centered">
 
@@ -43,7 +44,7 @@
     </div>
 
     <!-- Order cancel modal -->
-    <div class="ui page dimmer" ng-class="{active:orderToCancel.id}">
+    <div ng-if="!user.admin" class="ui page dimmer" ng-class="{active:orderToCancel.id}">
         <div class="content">
             <div class="ui two column centered grid stackable">
                 <div class="column">
@@ -55,7 +56,7 @@
                             <button class="massive ui button" ng-click="cancelOrder()">
                                 Cancel order
                             </button>
-                            <button class="massive ui button teal" ng-click="orderToCancel = {}">
+                            <button class="massive ui button teal" ng-click="keepOrder()">
                                 Keep order
                             </button>
                         </div>
@@ -63,9 +64,10 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div><!-- SIDEBAR END -->
 </div>
+
+<!-- CONTENT -->
 <div snap-content="right" snap-opt-disable="'left'">
     <div class="ui fixed pointing borderless one item menu">
         <div class="ui container center aligned">
@@ -76,12 +78,13 @@
         </div>
     </div>
 
+    <!-- VIEWS -->
     <div id="appWrapper" ng-view=""></div>
 
     <div class="ui inverted vertical footer segment">
         <div class="ui container">
             <div class="ui inverted divided equal height stackable grid">
-                <div class="three wide column">
+                <!--<div class="three wide column">
                     <h4 class="ui inverted header">About</h4>
                     <div class="ui inverted link list">
                         <a href="#" class="item">Sitemap</a>
@@ -98,12 +101,12 @@
                         <a href="#" class="item">How To Access</a>
                         <a href="#" class="item">Favorite X-Men</a>
                     </div>
-                </div>
+                </div>-->
                 <div class="seven wide column">
-                    <h4 class="ui inverted header">Footer Header</h4>
-                    <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                    <h4 class="ui inverted header">Today's menu is.</h4>
+                    <p>All rights reserved.</p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div><!-- CONTENT END -->
