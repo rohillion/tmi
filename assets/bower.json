@@ -1,0 +1,27 @@
+{
+  "name": "tmi",
+  "homepage": "https://github.com/rohillion/tmi",
+  "authors": [
+    "rohillion"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.4.9",
+    "angular-resource": "~1.4.9",
+    "angular-snap": "~1.8.5",
+    "jquery": "~2.2.0",
+    "ng-file-upload": "~11.2.3",
+    "ngmap": "~1.16.7"
+  }
+}
