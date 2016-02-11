@@ -21,7 +21,7 @@ var AuthController = {
     'facebook': function (req, res) {
         passport.authenticate('facebook', {
                 //failureRedirect: '/login',
-                //scope: ['email']
+                scope: ['email']
             },
             function (err, user) {
                 req.logIn(user, function (err) {
