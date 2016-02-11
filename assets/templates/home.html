@@ -14,18 +14,18 @@
                 </div>
             </div>
 
-            <div ng-if="user.admin === true" id="deleteDish" class="ui button icon" title="Delete current dish" ng-click="deleteDish()">
+            <div ng-if="user.admin === true && dish.id" id="deleteDish" class="ui button icon" title="Delete current dish" ng-click="deleteDish()">
                 <i class="ui icon delete"></i>
             </div>
 
-            <h1 id="dishName" class="ui header" contenteditable="{{user.admin === true}}" ng-blur="saveDish()" ng-model="dish.name">
+            <h1 ng-if="dish.id" id="dishName" class="ui header" contenteditable="{{user.admin === true}}" ng-blur="saveDish()" ng-model="dish.name">
             </h1>
 
         </header>
 
         <br>
         <div class="ui centered grid stackable">
-            <div>
+            <div ng-if="dish.id">
                 <div class="ui inverted dimmer image-loading">
                     <div class="ui text loader">Loading</div>
                 </div>

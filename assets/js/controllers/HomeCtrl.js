@@ -53,7 +53,7 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
         //Create new dish as active
         Dish.save({
             name: "New Dish...",
-            price: "0,00",
+            price: "0.00",
             active: true,
             imagePath: '/images/image.png'
         }, function (dish) {
