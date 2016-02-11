@@ -20,7 +20,7 @@ var AuthController = {
 
     'facebook': function (req, res) {
         passport.authenticate('facebook', {
-                failureRedirect: '/login',
+                //failureRedirect: '/login',
                 //scope: ['email']
             },
             function (err, user) {
