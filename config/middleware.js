@@ -49,6 +49,7 @@ module.exports = {
             // Configure with your credentials
             var FACEBOOK_APP_ID = local.FACEBOOK_APP_ID;
             var FACEBOOK_APP_SECRET = local.FACEBOOK_APP_SECRET;
+            var FACEBOOK_CALLBACK_URL = local.FACEBOOK_APP_SECRET;
 
             //var GOOGLE_CLIENT_ID = local.GOOGLE_CLIENT_ID;
             //var GOOGLE_CLIENT_SECRET = local.GITHUB_CLIENT_SECRET;
@@ -56,7 +57,7 @@ module.exports = {
             passport.use(new FacebookStrategy({
                     clientID: FACEBOOK_APP_ID,
                     clientSecret: FACEBOOK_APP_SECRET,
-                    callbackURL: "http://localhost:1337/auth/facebook/callback",
+                    callbackURL: FACEBOOK_CALLBACK_URL + "/auth/facebook/callback",
                     enableProof: false
                 },
                 verifyHandler
