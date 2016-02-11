@@ -49,7 +49,7 @@ module.exports = {
             // Configure with your credentials
             var FACEBOOK_APP_ID = local.FACEBOOK_APP_ID;
             var FACEBOOK_APP_SECRET = local.FACEBOOK_APP_SECRET;
-            var FACEBOOK_CALLBACK_URL = local.FACEBOOK_APP_SECRET;
+            var FACEBOOK_CALLBACK_URL = local.FACEBOOK_CALLBACK_URL;
 
             //var GOOGLE_CLIENT_ID = local.GOOGLE_CLIENT_ID;
             //var GOOGLE_CLIENT_SECRET = local.GITHUB_CLIENT_SECRET;
