@@ -16,8 +16,8 @@ var verifyHandler = function (token, tokenSecret, profile, done) {
                     name: profile.displayName,
                     admin: false,
                     location: '',
-                    email: profile.emails[0].value,
-                    picture:profile.photos[0].value
+                    email: profile.emails && profile.emails.length > 0 ? profile.emails[0].value : '' ,
+                    picture: profile.photos && profile.photos.length > 0 ? profile.photos[0].value : ''
                 }, function (err, user) {
                     return done(err, user);
                 });
