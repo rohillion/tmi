@@ -14,7 +14,9 @@ module.exports = {
     
     FACEBOOK_APP_ID: '1563261280632103',
     FACEBOOK_APP_SECRET: 'ed0a7c716bd7927091e1963d050e8940',
-    FACEBOOK_CALLBACK_URL: 'http://localhost:1337'
+    FACEBOOK_CALLBACK_URL: 'http://localhost:1337',
+    
+    cors_allowed_origins: 'http://localhost:1337'
 
   /***************************************************************************
    * Set the default database connection for models in the development       *

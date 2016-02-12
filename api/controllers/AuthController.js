@@ -19,11 +19,13 @@ var AuthController = {
     },
 
     'facebook': function (req, res) {
+        console.log('A');
         passport.authenticate('facebook', {
                 //failureRedirect: '/login',
-                scope: ['email']
+                scope: 'email'
             },
             function (err, user) {
+            console.log('vuelve A');
                 req.logIn(user, function (err) {
                     if (err) {
                         console.log(err);
@@ -38,34 +40,10 @@ var AuthController = {
     },
 
     'facebook/callback': function (req, res) {
+        console.log('B');
         passport.authenticate('facebook',
             function (req, res) {
-                res.redirect('/');
-            })(req, res);
-    },
-
-    'google': function (req, res) {
-        passport.authenticate('google', {
-                failureRedirect: '/login',
-                scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.profile']
-            },
-            function (err, user) {
-                req.logIn(user, function (err) {
-                    if (err) {
-                        console.log(err);
-                        res.view('500');
-                        return;
-                    }
-
-                    res.redirect('/');
-                    return;
-                });
-            })(req, res);
-    },
-
-    'google/callback': function (req, res) {
-        passport.authenticate('google',
-            function (req, res) {
+            console.log('vuelve B');
                 res.redirect('/');
             })(req, res);
     },

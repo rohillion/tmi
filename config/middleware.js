@@ -1,10 +1,9 @@
 var passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
-//GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var verifyHandler = function (token, tokenSecret, profile, done) {
     process.nextTick(function () {
-
+        console.log(profile);
         User.findOne({
             uid: profile.id
         }, function (err, user) {
@@ -16,7 +15,9 @@ var verifyHandler = function (token, tokenSecret, profile, done) {
                     uid: profile.id,
                     name: profile.displayName,
                     admin: false,
-                    location: ''
+                    location: '',
+                    email: profile.emails[0].value,
+                    picture:profile.photos[0].value
                 }, function (err, user) {
                     return done(err, user);
                 });
@@ -51,25 +52,15 @@ module.exports = {
             var FACEBOOK_APP_SECRET = local.FACEBOOK_APP_SECRET;
             var FACEBOOK_CALLBACK_URL = local.FACEBOOK_CALLBACK_URL;
 
-            //var GOOGLE_CLIENT_ID = local.GOOGLE_CLIENT_ID;
-            //var GOOGLE_CLIENT_SECRET = local.GITHUB_CLIENT_SECRET;
-
             passport.use(new FacebookStrategy({
                     clientID: FACEBOOK_APP_ID,
                     clientSecret: FACEBOOK_APP_SECRET,
                     callbackURL: FACEBOOK_CALLBACK_URL + "/auth/facebook/callback",
-                    enableProof: false
+                    enableProof: false,
+                    profileFields: ['id', 'displayName', 'emails', 'picture.type(large)']
                 },
                 verifyHandler
             ));
-
-            /*passport.use(new GoogleStrategy({
-                    clientID: GOOGLE_CLIENT_ID,
-                    clientSecret: GOOGLE_CLIENT_SECRET,
-                    callbackURL: 'http://localhost:1337/auth/google/callback'
-                },
-                verifyHandler
-            ));*/
 
             app.use(passport.initialize());
             app.use(passport.session());

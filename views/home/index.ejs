@@ -5,7 +5,7 @@
 
             <% if (user) { %>
                 <h2 class="ui header">
-                <img src="http://graph.facebook.com/v2.5/<%- user.uid %>/picture?width=128&height=128" class="ui circular image">
+                <img src="<%- user.picture %>" class="ui circular image">
                 <div><%- user.name %></div>
             </h2>
 
