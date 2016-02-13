@@ -55,9 +55,9 @@ module.exports = {
                 mailOptions.subject = insertedRecord.qty + ' ' + dish.name;
 
 
-                mailOptions.html = '<i>Menu Details</i>\
+                mailOptions.html = '<i>Client Details</i>\
                                     <ul>\
-                                        <li><b>Client: </b>' + user.name + '</li>\
+                                        <li><b>Name: </b>' + user.name + '</li>\
                                         <li><b>Address: </b>' + user.address + '</li>\
                                         <li><b>Location: </b>\
                                             <a href="https://maps.google.ie/?q=' + user.address + '&sll=' + user.location.lat + ',' + user.location.lng + '">Go to maps</a>\
@@ -70,9 +70,7 @@ module.exports = {
                                         <li><b>Qty: </b>' + insertedRecord.qty + '</li>\
                                         <li><b>Total: </b>€' + insertedRecord.qty * dish.price + '</li>\
                                     </ul>';
-
-                ' maps.google.com/?q=ThePlace&sll=latitude,longitude'
-
+                console.log('order sent');
                 // send mail with defined transport object
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
@@ -89,9 +87,57 @@ module.exports = {
     },
 
     afterUpdate: function (updatedRecord, cb) {
-        console.log(updatedRecord);
-        if (updatedRecord.active === false)
-            console.log('send email');
+        if (updatedRecord.active === false) {
+            
+            User.findOne({
+                id: updatedRecord.client
+            }, function (err, user) {
+                if (err) {
+                    console.log('Order:afterCreate: User Lookup Error: ', err);
+                }
+
+                Dish.findOne({
+                    id: updatedRecord.dish
+                }, function (err, dish) {
+                    if (err) {
+                        console.log('Order:afterCreate: Dish Lookup Error: ', err);
+                    }
+
+                    //Set client name
+                    mailOptions.from = user.name + '<todaysmenuisapp@gmail.com>';
+
+                    //Set client name
+                    mailOptions.subject = 'Canceled order: ' + updatedRecord.qty + ' ' + dish.name;
+
+
+                    mailOptions.html = '<b><i>Canceled order:</i></b><br><br>\
+                                    <i>Client Details</i>\
+                                    <ul>\
+                                        <li><b>Name: </b>' + user.name + '</li>\
+                                        <li><b>Address: </b>' + user.address + '</li>\
+                                        <li><b>Location: </b>\
+                                            <a href="https://maps.google.ie/?q=' + user.address + '&sll=' + user.location.lat + ',' + user.location.lng + '">Go to maps</a>\
+                                        </li>\
+                                        <li><b>Phone: </b>' + user.phone + '</li>\
+                                    </ul>\
+                                    <i>Menu Details</i>\
+                                    <ul>\
+                                        <li><b>Dish: </b>' + dish.name + '</li>\
+                                        <li><b>Qty: </b>' + updatedRecord.qty + '</li>\
+                                        <li><b>Total: </b>€' + updatedRecord.qty * dish.price + '</li>\
+                                    </ul>';
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            return console.log(error);
+                        }
+                        console.log('Message sent: ' + info.response);
+                    });
+
+                });
+
+            });
+        }
 
         cb();
     }

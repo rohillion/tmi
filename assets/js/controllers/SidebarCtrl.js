@@ -11,14 +11,16 @@ tmi.controller('SidebarCtrl', ['$scope', 'Order', 'Auth', 'OrderForm', 'snapRemo
         console.log(order.id);
         $scope.orderToCancel = order;
     }
-    
+
     $scope.keepOrder = function () {
         $scope.orderToCancel = {};
     }
 
     $scope.cancelOrder = function () {
         $scope.orderToCancel.active = false;
-        updateOrder($scope.orderToCancel, function (res) {
+        updateOrder($scope.orderToCancel, {
+            active: false
+        }, function (res) {
             getOrders();
             $scope.orderToCancel = {};
         });
@@ -32,11 +34,11 @@ tmi.controller('SidebarCtrl', ['$scope', 'Order', 'Auth', 'OrderForm', 'snapRemo
             });
     });
 
-    function updateOrder(order, callback) {
+    function updateOrder(order, changes, callback) {
         //Update order
         Order.update({
             id: order.id
-        }, order, function (res) {
+        }, changes, function (res) {
             if (typeof callback === 'function')
                 callback(res.data);
         }, function (err) {
