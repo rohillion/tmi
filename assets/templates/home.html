@@ -2,6 +2,15 @@
     <div id="todayBox">
         <header ng-init="init()">
 
+            <button ng-if="user.admin === true && dish.id && config.orders.active" class="ui button updateConfig" title="Disable orders" ng-click="updateConfig(config.orders,{active:false})">
+                Disable orders
+            </button>
+
+            <button ng-if="user.admin === true && dish.id && !config.orders.active" class="ui button updateConfig" title="Enable orders" ng-click="updateConfig(config.orders,{active:true})">
+                Enable orders
+            </button>
+
+
             <div ng-if="user.admin === true" class="ui teal buttons">
                 <div class="ui button" ng-click="createDish()" title="Create new dish">New</div>
                 <div class="ui floating dropdown icon button dish-picker" title="Select dish from history">
@@ -41,8 +50,12 @@
                 <div id="dishPrice" ng-if="user.admin === true" contenteditable="{{user.admin === true}}" class="orange massive ui button" ng-model='dish.price' ng-blur="saveDish()">
                 </div>
 
-                <button ng-if="user.admin !== true" class="orange massive ui button" ng-click="open()">
+                <button ng-if="user.admin !== true && config.orders.active" class="orange massive ui button" ng-click="open()">
                     Order for {{dish.price | currency:"€":2}}
+                </button>
+                
+                <button ng-if="user.admin !== true && !config.orders.active" class="orange massive ui button">
+                    That's all for today. See you tomorrow!
                 </button>
             </div>
             <div ng-if="!dish.id">

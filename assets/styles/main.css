@@ -57,9 +57,16 @@ a.auth {
     }
 }
 
-#deleteDish {
+.updateConfig, #deleteDish {
     position: absolute;
+}
+
+#deleteDish {
     right: 0;
+}
+
+.updateConfig {
+    left: 0;
 }
 
 #tomorrowBox {}

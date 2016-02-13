@@ -44,6 +44,13 @@ module.exports.policies = {
         'read': true,
         'update': true,//TODO. should update just if current user?
         'destroy': 'isAdmin'
+    },
+    
+    'config': {
+        'create': 'isAdmin',
+        'read': true,
+        'update': 'isAdmin',
+        'destroy': 'isAdmin'
     }
 
     /***************************************************************************

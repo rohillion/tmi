@@ -1,9 +1,10 @@
-tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL', 'Upload', 'OrderForm', 'NgMap', function ($scope, Auth, User, Dish, Order, API_URL, Upload, OrderForm, NgMap) {
+tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'Config', 'API_URL', 'Upload', 'OrderForm', 'NgMap', function ($scope, Auth, User, Dish, Order, Config, API_URL, Upload, OrderForm, NgMap) {
 
     $scope.mapLoaded = false;
 
     $scope.orderForm = OrderForm.getScope();
 
+    $scope.config = {};
     $scope.user = {};
     $scope.dish = {};
     $scope.map = {};
@@ -18,6 +19,37 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
         lat: 53.3462285,
         lng: -6.28822
     };
+
+    $scope.loadConfig = function (callback) {
+        Config.query({
+            name: 'orders'
+        }, function (config) {
+            if (config.length < 1) {
+                Config.save({
+                    name: 'orders',
+                    active: true
+                }, function (config) {
+                    $scope.config.orders = config;
+                    if (typeof callback === 'function')
+                        callback();
+                });
+            } else {
+                $scope.config.orders = config[0];
+                if (typeof callback === 'function')
+                    callback();
+            }
+        });
+    }
+
+    $scope.updateConfig = function (config, data) {
+        Config.update({
+            id: config.id
+        }, data, function (config) {
+            $scope.config.orders = config;
+        }, function (err) {
+            console.log(err);
+        });
+    }
 
     //List dishes
     $scope.listDish = function (filters, callback) {
@@ -72,9 +104,9 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
 
     //Update changes on blur event
     $scope.updateDish = function (dish, callback) {
-        if(dish.price && dish.price.indexOf(',') > 0)
+        if (dish.price && dish.price.indexOf(',') > 0)
             dish.price = dish.price.replace(",", ".");
-        
+
         Dish.update({
             id: dish.id
         }, dish, function (dish) {
@@ -187,15 +219,24 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
     }
 
     $scope.createOrder = function () {
-        if ($scope.order.dish) {
-            Order.save($scope.order, function (order) {
-                $scope.close();
-                OrderForm.ordered();
-            }, function (err) {
-                console.log(err.data);
-                alert(err.data.summary);
-            });
-        }
+        $scope.loadConfig(function () {
+            if (!$scope.config.orders.active) {
+
+                alert('Sorry. We just closed the orders for today. Please come back tomorrow!');
+                window.location.reload();
+            } else {
+
+                if ($scope.order.dish) {
+                    Order.save($scope.order, function (order) {
+                        $scope.close();
+                        OrderForm.ordered();
+                    }, function (err) {
+                        console.log(err.data);
+                        alert(err.data.summary);
+                    });
+                }
+            }
+        });
     }
 
 
@@ -218,10 +259,15 @@ tmi.controller('HomeCtrl', ['$scope', 'Auth', 'User', 'Dish', 'Order', 'API_URL'
     }
 
     $scope.init = function () {
+        //Load config
+        $scope.loadConfig();
+
+        //Get dish list
         $scope.listDish({
             active: true
         }, setDish);
 
+        //Reload dish history
         refreshHistory();
     }
 
