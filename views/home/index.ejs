@@ -22,6 +22,10 @@
                         </div>
                         <div ng-click="setCancelOrder(order)" class="ui negative button bottom attached">Cancel order</div>
                     </div>
+                    
+                    <% if (user) { %>
+                        <a ng-if="orders.length > 0" class="ui button teal massive fluid" href="/auth/logout">Logout</a>
+                    <% } %>
                 </div>
 
                 <div ng-if="orders.length < 1">
@@ -36,9 +40,9 @@
                 <% }%>
         </div>
         <% if (user) { %>
-            <a id="logout" class="ui button teal auth massive" href="/auth/logout">Logout</a>
+            <a ng-if="orders.length < 1" class="ui button teal massive auth" href="/auth/logout">Logout</a>
             <% }else{ %>
-                <a id="login" class="ui button teal auth massive" href="/auth/facebook/">Login</a>
+                <a class="ui button teal auth massive" href="/auth/facebook/">Login</a>
                 <% } %>
 
     </div>
@@ -64,7 +68,8 @@
                 </div>
             </div>
         </div>
-    </div><!-- SIDEBAR END -->
+    </div>
+    <!-- SIDEBAR END -->
 </div>
 
 <!-- CONTENT -->
@@ -109,4 +114,5 @@
             </div>
         </div>
     </div>
-</div><!-- CONTENT END -->
+</div>
+<!-- CONTENT END -->
