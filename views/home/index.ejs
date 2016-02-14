@@ -10,6 +10,17 @@
             </h2>
 
                 <div id="pending-orders" ng-if="orders.length > 0">
+
+                    <div class="ui icon message">
+                        <i class="truck icon tiny"></i>
+                        <div class="content">
+                            <div class="header">
+                                Delivery
+                            </div>
+                            <p>between 11:30 and 12:30</p>
+                        </div>
+                    </div>
+
                     <div ng-repeat="order in orders" class="ui fluid card">
                         <div class="image">
                             <img ng-src="{{order.dish.imagePath}}">
@@ -22,10 +33,10 @@
                         </div>
                         <div ng-click="setCancelOrder(order)" class="ui negative button bottom attached">Cancel order</div>
                     </div>
-                    
+
                     <% if (user) { %>
                         <a ng-if="orders.length > 0" class="ui button teal massive fluid" href="/auth/logout">Logout</a>
-                    <% } %>
+                        <% } %>
                 </div>
 
                 <div ng-if="orders.length < 1">
