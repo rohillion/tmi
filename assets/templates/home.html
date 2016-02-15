@@ -53,7 +53,13 @@
                 <button ng-if="user.admin !== true && config.orders.active" class="orange massive ui button" ng-click="open()">
                     Order for {{dish.price | currency:"€":2}}
                 </button>
-                
+
+                <div class="ui message">
+                    <div class="content">
+                        <p>Orders taken until 11:00 and delivery between 11:30 and 12:30</p>
+                    </div>
+                </div>
+
                 <button ng-if="user.admin !== true && !config.orders.active" class="orange massive ui button">
                     That's all for today. See you tomorrow!
                 </button>
