@@ -16,7 +16,9 @@ module.exports = {
     FACEBOOK_APP_SECRET: 'f247bbde39eadf724c33e6298e27638a',
     FACEBOOK_CALLBACK_URL: 'http://todaysmenuis.com',
     
-    cors_allowed_origins: 'http://todaysmenuis.com'
+    cors_allowed_origins: 'http://todaysmenuis.com',
+    
+    hookTimeout: 30000, // 30 seconds
 
   /***************************************************************************
    * Set the default database connection for models in the production        *
